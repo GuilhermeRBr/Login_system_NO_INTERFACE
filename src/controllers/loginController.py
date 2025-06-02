@@ -1,26 +1,26 @@
-from db.connect import retornaSession
-from src.models.loginModel import Usuario
+from db.connect import returnSession
+from src.models.loginModel import User
 import bcrypt
 
-session = retornaSession()
+session = returnSession()
 
-def criptografar_senha(senha):
+def encrypt(senha):
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(senha.encode('utf-8'), salt).decode('utf-8')
 
 
-def cadastrar_usuario(nome, email, senha):
-    senha_criptografada = criptografar_senha(senha)
+def user_registration(name, email, password):
+    encrypted_password = encrypt(password)
 
     try:
-        usuario_existente = session.query(Usuario).filter_by(email=email).first()
-        if usuario_existente:
+        existent_user = session.query(User).filter_by(email=email).first()
+        if existent_user:
             raise ValueError("Usuário já cadastrado com este email.")
         else:
-            novo_usuario = Usuario(nome=nome, email=email, senha=senha_criptografada)
-            session.add(novo_usuario)
+            new_user = User(name=name, email=email, password=encrypted_password)
+            session.add(new_user)
             session.commit()
-            return novo_usuario
+            return new_user
     except ValueError as e:
         print(f"Erro: {e}")
         return None

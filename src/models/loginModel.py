@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import bcrypt
 
 USUARIO = 'root'
 SENHA = ''
@@ -15,19 +14,14 @@ engine = create_engine(Conexao, echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
-class Usuario(Base):
+class User(Base):
     __tablename__ = 'usuario'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    nome = Column(String(50))
+    name = Column(String(50))
     email = Column(String(50))
-    senha = Column(String(60))
+    password = Column(String(60))
 
-    def __init__(self, nome, email, senha):
-        self.nome = nome
+    def __init__(self, name, email, password):
+        self.name = name
         self.email = email
-        self.senha = self.criptografar_senha(senha)
-
-    def criptografar_senha(self, senha):
-        salt = bcrypt.gensalt()
-        return bcrypt.hashpw(senha.encode('utf-8'), salt).decode('utf-8')
-
+        self.password = password

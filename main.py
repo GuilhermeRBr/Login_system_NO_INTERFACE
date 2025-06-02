@@ -7,9 +7,9 @@ while True:
     
     option = input('Escolha uma opção: ')
     if option == '1':
-        name= 'laura'
-        email = 'gui@gmail.com'
-        password = '34322'
+        name= 'Guilherme'
+        email = 'guilherme@gmail.com'
+        password = '343422'
 
         user_registration(name, email, password)
 

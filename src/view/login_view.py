@@ -19,7 +19,7 @@ def login_screen():
                 if password == check_password:
                     break
                 else:
-                    print('As senhas não coincidem. Tente novamente.')
+                    print('As senhas não coincidem. Tente novamente.\n')
 
             login, user = user_registration(name, email, password)
             
@@ -34,10 +34,10 @@ def login_screen():
             login, user = user_login(email, password)
 
             if login:
-                print(f'Login bem-sucedido!')
+                print(f'Login bem-sucedido!\n')
                 break
             else:
-                print('Email ou senha incorretos. Tente novamente.')
+                print('Email ou senha incorretos. Tente novamente.\n')
         else:
             print('Opção inválida!')
 

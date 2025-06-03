@@ -32,9 +32,9 @@ def user_login(email, password):
             if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
                 return True, user
             else:
-                return False
+                return False, None
         else:
-            return False
+            return False, None
     except Exception as e:
         print(f"Erro: {e}")
-        return False
+        return False, None

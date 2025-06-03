@@ -24,3 +24,17 @@ def user_registration(name, email, password):
     except ValueError as e:
         print(f"Erro: {e}")
         return None
+    
+def user_login(email, password):
+    try:
+        user = session.query(User).filter_by(email=email).first()
+        if user:
+            if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+                return True, user
+            else:
+                return False
+        else:
+            return False
+    except Exception as e:
+        print(f"Erro: {e}")
+        return False

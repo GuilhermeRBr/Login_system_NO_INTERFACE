@@ -9,10 +9,17 @@ def login_screen():
         
         option = input('Escolha uma opção: ')
         if option == '1':
-            name= validate_name()
+            name = validate_name()
             email = validate_email()
             print('A senha deve conter pelo menos 8 caracteres, incluindo letras, números e caracteres especiais:')
-            password = validate_password()
+            while True:
+                password = validate_password()
+                print('Confirme sua senha:')
+                check_password = validate_password()
+                if password == check_password:
+                    break
+                else:
+                    print('As senhas não coincidem. Tente novamente.')
 
             login, user = user_registration(name, email, password)
             
@@ -21,18 +28,21 @@ def login_screen():
                 break
 
         elif option == '2':
-            email = input('Digite o email do usuário: ')
-            senha = input('Digite a senha do usuário: ')
-            usuario = session.query(User).filter_by(email=email, senha=senha).first()
-            if usuario:
-                print(f'Login bem-sucedido! Bem-vindo, {usuario.nome}!')
+            email = validate_email()
+            password = validate_password()
+
+            login, user = user_login(email, password)
+
+            if login:
+                print(f'Login bem-sucedido!')
+                break
             else:
                 print('Email ou senha incorretos. Tente novamente.')
         else:
             print('Opção inválida!')
 
     while True:
-        print(f'Seja bem vindo {name}!\n')
+        print(f'Seja bem vindo {user.name}!\n')
         option = input('Digite 0 para sair: ')
         if option == '0':
             print('Saindo do sistema...')

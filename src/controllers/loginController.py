@@ -1,12 +1,12 @@
 from db.connect import returnSession
-from src.models.loginModel import User
+from models.loginModel import User
 import bcrypt
 
 session = returnSession()
 
-def encrypt(senha):
+def encrypt(password):
     salt = bcrypt.gensalt()
-    return bcrypt.hashpw(senha.encode('utf-8'), salt).decode('utf-8')
+    return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
 
 
 def user_registration(name, email, password):
@@ -19,9 +19,8 @@ def user_registration(name, email, password):
         else:
             new_user = User(name=name, email=email, password=encrypted_password)
             session.add(new_user)
-            session.commit()
-            return new_user
+            session.commit()  
+            return True, session.query(User).filter_by(email=email).first()
     except ValueError as e:
         print(f"Erro: {e}")
         return None
-    
